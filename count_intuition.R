@@ -64,3 +64,31 @@ for (i in 1:length(L)) {
 dev.off()
 
 
+pdf("/home/bd/Dropbox/Apps/Overleaf/Interaction_problems/count_kidney.pdf",width=6,height=2.3)
+par(mfrow=c(1,3),mgp=c(2,1,0),mar=c(3,3,1.8,0.2))
+for (i in 1:length(L)) {
+    z<-L[[i]]
+    cc<-col2rgb("lightgray")
+    c2<-rgb(cc[1],cc[2],cc[3],max=255,alpha=105)
+    plot(z$x*z$z,z$y,pch=19,cex=0,col=c2,xlab='x*z',ylab='E(y)',ylim=c(0,8))
+    z2<-z
+    cc<-col2rgb("red")
+    c1<-rgb(cc[1],cc[2],cc[3],max=255,alpha=105)
+    points(z2$x*z2$z,z2$ystar,pch=19,cex=.75,col=c1)
+    m<-lm(y~x*z,z)
+    #legend("bottomleft",bty='n',legend=paste("pv=",round(summary(m)$coef[4,4],3)))
+    #cc<-round(pars[[i]]$cc,2)
+    #mtext(side=3,line=0,bquote("c="~.(cc)))
+    c1<-cor(z$x*z$z,z$y)
+    c2<-cor(z$x*z$z,z$ystar)
+    legend("topleft",bty='n',#fill=c("red","lightgray"),
+           c(paste("r=",round(c1,2))#,
+                                                         #paste("r(ystar,x*z)=",round(c2,2))
+                                                         )
+           )
+    b0<-as.character(b2L[i])
+    mtext(side=3,line=0,bquote(beta[2]~"="~.(b0)))
+}
+dev.off()
+
+

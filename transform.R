@@ -1,7 +1,7 @@
 pdf("/home/bd/Dropbox/Apps/Overleaf/Interaction_problems/transform0.pdf",width=6,height=6)
 par(mgp=c(2,1,0))
 alpha<-0
-lambdalist<-c(0.1,1,2)
+lambdalist<-c(0.1,0.5,1)
 cols<-colorRampPalette(c("blue", "red"))( length(lambdalist) ) ## (n)
 ##
 y<-seq(-5,5,length.out=1000)
