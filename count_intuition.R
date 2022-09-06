@@ -10,7 +10,6 @@ pars<-tmp
 
 simfun<-function(pars,b1=.2,b2=.5) {
     for (i in 1:length(pars)) assign(names(pars)[i],pars[[i]][1])
-    std<-function(x) (x-mean(x,na.rm=TRUE))/sd(x,na.rm=TRUE)
     library(MASS)
     sig<-r2<-numeric()
     xz<-mvrnorm(N,mu=c(0,0),Sigma=matrix(c(1,rho,rho,1),2,2))

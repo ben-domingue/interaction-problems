@@ -5,11 +5,11 @@ lambdalist<-c(0.1,0.5,1)
 cols<-colorRampPalette(c("blue", "red"))( length(lambdalist) ) ## (n)
 ##
 y<-seq(-5,5,length.out=1000)
-plot(NULL,xlim=range(y),ylim=c(-2,2),type='l',lwd=2,xlab='y*',ylab='y')
+plot(NULL,xlim=range(y),ylim=c(0,4),type='l',lwd=2,xlab='y*',ylab='y')
 for (i in 1:length(lambdalist)) {
     lambda<-lambdalist[i]
     ys<-1.05^((y-alpha)/lambda)
-    ys<-(ys-mean(ys))/sd(ys)
+    #ys<-(ys-mean(ys))/sd(ys)
     lines(y,ys,lwd=2,col=cols[i])
     #abline(lm(ys~y),lty=2,col='red',lwd=2)
     }

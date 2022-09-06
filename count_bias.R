@@ -3,7 +3,7 @@ simfun<-function(pars) {
     for (i in 1:length(pars)) assign(names(pars)[i],pars[[i]][1])
     library(MASS)
     out<-list()
-    for (i in 1:1000) {
+    for (i in 1:10000) {
         xz<-mvrnorm(N,mu=c(0,0),Sigma=matrix(c(1,rho,rho,1),2,2))
         y<-b0+b1*xz[,1]+b2*xz[,2]+b3*xz[,1]*xz[,2]
         y<-exp(y)
@@ -48,7 +48,7 @@ for (i in 1:nrow(pars)) tmp[[i]]<-pars[i,]
 pars<-tmp
 out<-mclapply(pars,simfun,mc.cores=25)
 df<-data.frame(do.call("rbind",out))
-save(df,file="/tmp/df_count_bias.Rdata")
+save(df,file="df_count_bias.Rdata")
 
 N<-round(seq(250,1000,length.out=50)) #c(250,500,1000,2000,4000,5000)
 rho<-0 #c(0,.5) #rho<-seq(0,.3,by=.1)
@@ -62,10 +62,11 @@ for (i in 1:nrow(pars)) tmp[[i]]<-pars[i,]
 pars<-tmp
 out<-mclapply(pars,simfun,mc.cores=25)
 df<-data.frame(do.call("rbind",out))
-save(df,file="/tmp/df_count_power.Rdata")
+##
+save(df,file="df_count_power.Rdata")
 
 pdf("/home/bd/Dropbox/Apps/Overleaf/Interaction_problems/count_bias.pdf",width=7,height=3.3)
-par(mfrow=c(1,2),mar=c(3,3,1,1),mgp=c(2,1,0),oma=rep(.5,4))
+par(mfrow=c(1,2),mar=c(3,3.5,1,1),mgp=c(2,1,0),oma=rep(.5,4))
 ##
 load("df_count_bias.Rdata")
 pf<-function(df,var,...) {
@@ -87,7 +88,7 @@ pf<-function(df,var,...) {
     }
     cols
 }
-cols<-pf(df,'est.lm',ylab=expression("LM estimate"~beta[3]))
+cols<-pf(df,'est.lm',ylab=expression("LM estimate"~beta[3]^LM))
 legend("topleft",bty='n',legend=unique(df$N),fill=cols,title="N")
 #legend("topleft",bty='n',legend=expression(beta[1]))#~unique(df$b1)))
 ##

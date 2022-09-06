@@ -8,14 +8,12 @@ for (i in 1:nrow(pars)) tmp[[i]]<-pars[i,]
 pars<-tmp
 
 
-simfun<-function(pars,b1=1,b2=1,s2=1) {
+simfun<-function(pars,b1=1,b2=1,s2=.25) {
     for (i in 1:length(pars)) assign(names(pars)[i],pars[[i]][1])
-    std<-function(x) (x-mean(x,na.rm=TRUE))/sd(x,na.rm=TRUE)
     library(MASS)
     sig<-r2<-numeric()
     xz<-mvrnorm(N,mu=c(0,0),Sigma=matrix(c(1,rho,rho,1),2,2))
     y<-b1*xz[,1]+b2*xz[,2]+rnorm(N,sd=sqrt(s2))
-    y<-std(y)
     ystar<-y
     y<-ifelse(y>cc,y,cc)
     ##
@@ -37,7 +35,7 @@ for (i in 1:length(L)) {
     cc<-col2rgb("red")
     c3<-rgb(cc[1],cc[2],cc[3],max=255,alpha=75)
     col<-c(c1,c2,c3)[col.test]
-    plot(z$x,z$ystar,pch=19,cex=.375,col=col,xlab='x',ylab='y')
+    plot(z$x,z$y,pch=19,cex=.375,col=col,xlab='x',ylab='y',ylim=c(-4,4))
     xv<-seq(-3,3,length.out=100)
     #m0<-glm(y~x*z,z,family='binomial')
     library(censReg)
